@@ -19,7 +19,7 @@ class BusinessService:
         self._port = port
         self._base_url = "http://" + username + ":" + password + "@" + server + ":" + port + "/ism"
         self._driver = webdriver.PhantomJS(executable_path='E:\\phantomjs-2.1.1\\bin\\phantomjs')
-        #self._driver = webdriver.Chrome(executable_path='E:\\chromedriver')
+        # self._driver = webdriver.Chrome(executable_path='E:\\chromedriver')
         self._webi = WebInteraction.WebInteraction()
         self._webi.init(username,password,server,port)
         self._config_handler = ConfigHandler.ConfigHandler()

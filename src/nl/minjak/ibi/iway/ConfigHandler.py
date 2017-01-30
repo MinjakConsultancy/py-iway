@@ -1,3 +1,4 @@
+import nl.minjak.util.WindowsAdmin as admin
 import win32service
 import win32serviceutil
 import traceback
@@ -7,7 +8,8 @@ class ConfigHandler:
     _configs = list()
 
     def get_iway_configs(self):
-        if self._configs.count == 0:
+        print(len(self._configs))
+        if len(self._configs) == 0:
             accessSrv = win32service.SC_MANAGER_ALL_ACCESS
             hscm = win32service.OpenSCManager(None, None, accessSrv)
             # Enumerate Service Control Manager DB
@@ -23,16 +25,23 @@ class ConfigHandler:
         return self._configs
 
     def restart_config(self, name):
+        print('restarting '+ name)
+        self.get_iway_configs()
         service_name = "iWay7 "+name
         if service_name in self._configs:
             try:
                 win32serviceutil.RestartService(service_name)
-                print('{} restarted'.format(service_name))
-            except:  # Exception as e:
-                # print(str(e))
+                print('{} restarted.'.format(service_name))
+            except:
                 traceback.print_exc()
+            #     pass
+            # win32serviceutil.StartService(service_name)
+            # win32serviceutil.StopService(service_name)
+        else:
+            print('config not in configlist...')
 
     def restart_base_config(self):
+        self.get_iway_configs()
         service_name = "iWay7 base"
         if service_name in self._configs:
             try:
@@ -55,6 +64,17 @@ class ConfigHandler:
 def test():
     t = ConfigHandler()
     print(t.get_iway_configs())
+    t.restart_base_config()
 
 if __name__ == "__main__":
-    test()
+    print('ok1')
+    if not admin.isUserAdmin():
+        print('ok2')
+        admin.runAsAdmin()
+    else:
+        print('ok3')
+        import sys, os, os.path
+        os.environ['PYTHONPATH'] = 'E:\\git\\py-iway\\src'
+
+        test()
+        test = input('ok')
