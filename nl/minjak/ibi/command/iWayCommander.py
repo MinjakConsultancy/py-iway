@@ -35,6 +35,7 @@ def do_action():
 
 if __name__ == '__main__':
     if not admin.isUserAdmin():
+        print(os.getcwd())
         # print(sys.argv)
         os.environ['PYTHONPATH'] = 'E:\\git\\py-iway\\src'
         # print('not runnig as admin')

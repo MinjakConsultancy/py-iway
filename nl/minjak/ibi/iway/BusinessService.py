@@ -1,4 +1,5 @@
 from selenium import webdriver
+
 from nl.minjak.ibi.iway import WebInteraction, ConfigHandler
 
 
