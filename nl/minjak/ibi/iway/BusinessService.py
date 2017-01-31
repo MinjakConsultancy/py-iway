@@ -24,18 +24,19 @@ class BusinessService:
         self._webi = WebInteraction.WebInteraction()
         self._webi.init(username,password,server,port)
         self._config_handler = ConfigHandler.ConfigHandler()
-        print('base : ' + self._base_url)
-
+        #print('base : ' + self._base_url)
 
     def rebuild_config(self, config):
-        self._webi.rebuild_config(config)
-        self._config_handler.restart_config(config)
+        if self._config_handler.config_exists(config):
+            if self._webi.rebuild_config(config):
+                self._config_handler.restart_config(config)
 
     def rebuild_channel(self, config, channel_name):
-        self._webi.rebuild_channel(config, channel_name)
-        self._config_handler.restart_config(config)
-
+        if self._config_handler.config_exists(config):
+            if self._webi.rebuild_channel(config, channel_name):
+                self._config_handler.restart_config(config)
 
     def rebuild_processflow(self, config, processflow):
-        self._webi.rebuild_processflow(config, processflow)
-        self._config_handler.restart_config(config)
+        if self._config_handler.config_exists(config):
+            if self._webi.rebuild_processflow(config, processflow):
+                self._config_handler.restart_config(config)

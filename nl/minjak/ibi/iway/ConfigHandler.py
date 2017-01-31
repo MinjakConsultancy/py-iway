@@ -7,8 +7,16 @@ import traceback
 class ConfigHandler:
     _configs = list()
 
+    def get_service_name(self, config):
+        return "iWay7 " + config
+
+    def config_exists(self, config):
+        _return = self.get_service_name(config) in self.get_iway_configs()
+        if not _return:
+            print('Config {} does not exists'.format(config))
+        return _return
+
     def get_iway_configs(self):
-        print(len(self._configs))
         if len(self._configs) == 0:
             accessSrv = win32service.SC_MANAGER_ALL_ACCESS
             hscm = win32service.OpenSCManager(None, None, accessSrv)
@@ -19,16 +27,14 @@ class ConfigHandler:
 
             statuses = win32service.EnumServicesStatus(hscm, typeFilter, stateFilter)
             for (short_name, desc, status) in statuses:
-                # print(short_name, desc, status)
                 if str(short_name).startswith("iWay7"):
+                    # print(short_name)
                     self._configs.append(short_name)
         return self._configs
 
-    def restart_config(self, name):
-        print('restarting '+ name)
-        self.get_iway_configs()
-        service_name = "iWay7 "+name
-        if service_name in self._configs:
+    def restart_config(self, config):
+        service_name = self.get_service_name(config)
+        if self.config_exists(config):
             try:
                 win32serviceutil.RestartService(service_name)
                 print('{} restarted.'.format(service_name))
@@ -41,9 +47,9 @@ class ConfigHandler:
             print('config not in configlist...')
 
     def restart_base_config(self):
-        self.get_iway_configs()
-        service_name = "iWay7 base"
-        if service_name in self._configs:
+        config = 'base'
+        service_name = self.get_service_name(config)
+        if self.config_exists(config):
             try:
                 win32serviceutil.RestartService(service_name)
                 print('{} restarted'.format(service_name))

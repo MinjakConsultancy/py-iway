@@ -6,7 +6,7 @@ import nl.minjak.util.WindowsAdmin as admin
 def do_action():
 
     args = sys.argv
-    print(args)
+    # print(args)
     if len(args) < 0:
         print('missing action argument')
     else:
@@ -21,15 +21,17 @@ def do_action():
             # for now use defaults
             print('Rebuilding config ' + config)
             iWayBS.rebuild_config(config)
-        elif action == 'rebuildCChannel':
+        elif action == 'rebuildChannel':
             config = args[2]
             channel_name = args[3]
             # for now use defaults
+            print('Rebuilding channel')
             iWayBS.rebuild_channel(config, channel_name)
         elif action == 'rebuildProcessflow':
             config = args[2]
             channel_name = args[3]
             # for now use defaults
+            print('Rebuilding processflow')
             iWayBS.rebuild_processflow(config, channel_name)
 
 
