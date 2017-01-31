@@ -23,11 +23,11 @@ python -m nl.minjak.ibi.command.iWayCommander rebuidConfig <config>
 
 To start a rebuild of a channel:
 ``
-python -m nl.minjak.ibi.command.iWayCommander rebuidConfig <config> <channel>
+python -m nl.minjak.ibi.command.iWayCommander rebuidChannel <config> <channel>
 ``
 
 To start a rebuild of a processflow:
 ``
-python -m nl.minjak.ibi.command.iWayCommander rebuidConfig <config> <channel>
+python -m nl.minjak.ibi.command.iWayCommander rebuidProcessflow <config> <channel>
 ``
 
