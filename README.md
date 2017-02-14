@@ -18,16 +18,16 @@ My installation...:
 
 To start a rebuild of a configuration:
 ``
-python -m nl.minjak.ibi.command.iWayCommander rebuidConfig <config>
+python -m nl.minjak.ibi.command.iWayCommander rebuildConfig <config>
 ``
 
 To start a rebuild of a channel:
 ``
-python -m nl.minjak.ibi.command.iWayCommander rebuidChannel <config> <channel>
+python -m nl.minjak.ibi.command.iWayCommander rebuildChannel <config> <channel>
 ``
 
 To start a rebuild of a processflow:
 ``
-python -m nl.minjak.ibi.command.iWayCommander rebuidProcessflow <config> <channel>
+python -m nl.minjak.ibi.command.iWayCommander rebuildProcessflow <config> <channel>
 ``
 
