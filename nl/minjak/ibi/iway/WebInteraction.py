@@ -41,8 +41,8 @@ class WebInteraction:
         self._server = server
         self._port = port
         self._base_url = "http://" + username + ":" + password + "@" + server + ":" + port + "/ism"
-        self._driver = webdriver.PhantomJS(executable_path='E:\\phantomjs-2.1.1\\bin\\phantomjs')
-        # self._driver = webdriver.Chrome(executable_path='E:\\chromedriver')
+        # self._driver = webdriver.PhantomJS(executable_path='E:\\phantomjs-2.1.1\\bin\\phantomjs')
+        self._driver = webdriver.Chrome(executable_path='E:\\chromedriver')
         # self._driver = webdriver.Firefox(executable_path='E:\\geckodriver')
         # self._driver.set_page_load_timeout(60)
 
@@ -154,11 +154,34 @@ class WebInteraction:
             print('Cannot find procesflow '+processflow+' within configuration '+config)
             return False
 
+    def listPFlows(self, config):
+        url = self._base_url + "?configuration=" + config
+        driver = self._driver
+        driver.get(url=url)
+        time.sleep(3)
+        try:
+            driver.switch_to_alert().accept()
+        except:
+            pass
+        time.sleep(3)
+        print('echt')
+        driver.find_element_by_link_text("Deployments").click()
+        driver.find_element_by_link_text("Services").click()
+
+        hs = open("pflow.csv", "a")
+        for row in driver.find_elements_by_xpath("//td[@id='iway-content']/form/fieldset/table[2]/tbody/tr/td[2]"):
+            print(config+";"+row.text)
+            hs.write(config+";"+row.text+";\n")
+        hs.close()
+
+
 
 def test():
     t = WebInteraction()
-    t.init("iway", "iway", "localhost", "9999")
-    t.rebuild_config("base")
+    t.init()
+    # print('init done')
+
+
 
 if __name__ == '__main__':
     test()
